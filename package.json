@@ -1,0 +1,38 @@
+{
+  "name": "via-festas-buffet",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 5238",
+    "build": "next build",
+    "start": "next start -p 5238",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "fotos": "node scripts/fotos.mjs",
+    "logo": "node scripts/logo.mjs",
+    "mapa": "python scripts/mapa.py",
+    "analyze": "node scripts/analyze.mjs",
+    "build:pages": "node scripts/pages.mjs"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.9.1",
+    "lucide-react": "^1.48.0",
+    "next": "16.3.6",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "react-hook-form": "^7.88.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@next/bundle-analyzer": "^16.3.6",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.6",
+    "sharp": "^0.35.4",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
