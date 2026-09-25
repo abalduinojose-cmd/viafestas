@@ -1,7 +1,7 @@
 import { ArrowUpRight, MapPin } from "lucide-react";
 import Image from "next/image";
 
-import { fotos } from "@/assets/fotos";
+import heroCastelo from "@/assets/fotos/hero-castelo.jpg";
 import { HERO, WHATSAPP, linkWhatsApp } from "@/content/site";
 
 import { Botao } from "../ui/Botao";
@@ -14,7 +14,6 @@ import { Botao } from "../ui/Botao";
  * abre o WhatsApp com a mensagem pronta. Tudo Server Component.
  */
 export function Hero() {
-  const foto = fotos[HERO.foto];
   return (
     <section id="topo" aria-labelledby="titulo-hero" className="on-dark relative bg-noite p-2 sm:p-3">
       <div className="relative isolate flex min-h-[calc(100svh-1rem)] flex-col justify-end overflow-hidden rounded-[1.5rem] sm:min-h-[calc(100svh-1.5rem)] sm:rounded-[2rem]">
@@ -22,7 +21,7 @@ export function Hero() {
             não disputar banda com a fonte do título. Eager porque está na dobra. */}
         <div aria-hidden className="absolute inset-0 -z-20 overflow-hidden">
           <div className="hero-zoom absolute inset-0">
-            <Image src={foto.src} alt="" fill loading="eager" sizes="100vw" placeholder="blur" quality={60} className="object-cover object-[62%_40%]" />
+            <Image src={heroCastelo} alt="" fill loading="eager" sizes="100vw" placeholder="blur" quality={90} className="object-cover object-[62%_40%]" />
           </div>
         </div>
         <div aria-hidden className="veu-hero absolute inset-0 -z-10" />

@@ -35,15 +35,15 @@ export function MapaInterativo({ imagem, consulta, titulo, nome }: Props) {
   return (
     <>
       <Image src={imagem} alt="" fill placeholder="blur" sizes="(min-width: 1024px) 50vw, 92vw" className="object-cover" />
-      <span aria-hidden className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,rgb(247_242_253/0.55)_100%)]" />
+      <span aria-hidden className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgb(11_10_16/0.7)_100%)]" />
 
       {/* Pino: gota noite com a inicial em lilas e a etiqueta do salão. */}
       <span aria-hidden className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-full flex-col items-center">
-        <span className="mb-2 whitespace-nowrap rounded-full bg-noite px-3.5 py-1.5 text-[0.8rem] font-semibold text-branco shadow-lg">{nome}</span>
-        <span className="relative grid size-11 place-items-center rounded-full rounded-br-none bg-noite text-lilas-claro shadow-xl ring-4 ring-branco [transform:rotate(45deg)]">
+        <span className="mb-2 whitespace-nowrap rounded-full bg-branco px-3.5 py-1.5 text-[0.8rem] font-semibold text-noite shadow-lg">{nome}</span>
+        <span className="relative grid size-11 place-items-center rounded-full rounded-br-none bg-lilas text-noite shadow-[0_0_0_10px_rgb(193_142_246/0.25),0_12px_30px_rgb(0_0_0/0.6)] ring-4 ring-branco [transform:rotate(45deg)]">
           <MapPin className="size-5 [transform:rotate(-45deg)]" strokeWidth={2} />
         </span>
-        <span className="mt-1 size-3 rounded-full bg-noite/25 blur-[2px]" />
+        <span className="mt-1 size-3 rounded-full bg-lilas/50 blur-[3px]" />
       </span>
 
       <button

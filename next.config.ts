@@ -28,8 +28,8 @@ const nextConfig: NextConfig = {
     : {}),
   images: {
     formats: ["image/avif", "image/webp"],
-    // 60 na foto do hero (fica sob véu escuro), 75 no resto.
-    qualities: [60, 75],
+    // 90 na foto do hero (detalhe fino do castelo), 75 no resto.
+    qualities: [60, 75, 90],
     // Sem servidor não há otimização sob demanda: as fotos vão inteiras.
     unoptimized: pages,
   },

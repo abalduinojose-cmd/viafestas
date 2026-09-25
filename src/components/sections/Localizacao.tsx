@@ -23,7 +23,7 @@ export function Localizacao() {
         <div className="revela mt-12 grid grid-cols-1 overflow-hidden rounded-[2rem] border border-ink/10 bg-creme shadow-[0_40px_80px_-50px_rgb(18_15_26/0.45)] lg:grid-cols-[1.35fr_0.65fr]">
           <figure className="relative min-w-0 aspect-[4/5] sm:aspect-[16/10] lg:aspect-auto lg:min-h-[32rem]">
             <MapaInterativo imagem={mapa} consulta={consulta} titulo={`Mapa: ${consulta}`} nome={site.nome} />
-            <figcaption className="absolute right-3 top-3 rounded-full bg-branco/85 px-2.5 py-1 text-[0.68rem] text-ink-muted">© OpenStreetMap</figcaption>
+            <figcaption className="absolute right-3 top-3 rounded-full bg-branco/85 px-2.5 py-1 text-[0.68rem] text-ink">© OpenStreetMap</figcaption>
           </figure>
 
           <div className="flex min-w-0 flex-col p-7 sm:p-9">

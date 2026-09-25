@@ -82,7 +82,21 @@ export function Avaliacoes() {
                     </figcaption>
                     <Estrelas rotulo="5 de 5 estrelas" className="mt-4" />
                     <blockquote className="mt-3 flex-1">
-                      <p className="text-[0.95rem] leading-relaxed text-ink/80">{a.texto}</p>
+                      {a.texto.length > 320 ? (
+                        /* Texto longo abre em <details>: sem JavaScript e sem
+                           esticar a altura de todos os cartões do trilho. */
+                        <details className="group">
+                          <summary className="cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                            <p className="line-clamp-7 text-[0.95rem] leading-relaxed text-ink/80 group-open:line-clamp-none">{a.texto}</p>
+                            <span className="mt-2 inline-block text-[0.88rem] font-semibold text-roxo underline underline-offset-4">
+                              <span className="group-open:hidden">ler mais</span>
+                              <span className="hidden group-open:inline">ler menos</span>
+                            </span>
+                          </summary>
+                        </details>
+                      ) : (
+                        <p className="text-[0.95rem] leading-relaxed text-ink/80">{a.texto}</p>
+                      )}
                     </blockquote>
                     {a.foto ? (
                       <div className="relative mt-5 aspect-[4/3] overflow-hidden rounded-xl">

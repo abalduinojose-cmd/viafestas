@@ -1,8 +1,8 @@
 """
 Mapa estático da Localização: mosaico de tiles do OpenStreetMap em zoom de
 rua (17), centrado no endereço real da Via Festas e recolorido como mapa de
-papel na paleta do site: fundo branco lavanda, quadras em lilás acinzentado,
-ruas brancas, vias principais em lavanda e os nomes das ruas em tinta escura, legíveis.
+modo noite na paleta do site: fundo preto, quadras em violeta escuro,
+ruas claras, vias principais em lavanda e nomes das ruas em branco e os nomes das ruas em tinta escura, legíveis.
 O pino NÃO é assado aqui: a UI desenha o marcador no centro exato.
 Requer o crédito visível "© OpenStreetMap" onde o mapa aparecer.
 
@@ -39,25 +39,34 @@ a = np.asarray(img).astype(float) / 255
 R, G, B = a[..., 0], a[..., 1], a[..., 2]
 L = 0.2126 * R + 0.7152 * G + 0.0722 * B
 
-# Luminância vira uma rampa de papel: tinta (texto e contorno) -> areia -> creme.
-tinta = np.array([18, 15, 26]) / 255
-areia = np.array([222, 214, 236]) / 255
-creme = np.array([248, 245, 253]) / 255
-t = np.clip((L - 0.35) / 0.6, 0, 1)[..., None]
-base = np.where(t < 0.8, tinta + (areia - tinta) * (t / 0.8), areia + (creme - areia) * ((t - 0.8) / 0.2))
+# Modo noite na linguagem da marca. Cada classe do estilo padrão do OSM
+# vira uma cor da paleta:
+#   fundo bege (L ~0,94)        -> noite
+#   quadras e prédios (cinza)   -> violeta escuro
+#   mata e praça (verde)        -> verde quase preto
+#   via local (branca)          -> violeta médio (escura o bastante para o
+#                                  nome da rua, em branco, ler por cima)
+#   via principal (amarelo/lar.)-> lavanda do logo
+#   texto e ícones (escuros)    -> branco pérola
+noite = np.array([13, 11, 20]) / 255
+quadra = np.array([38, 32, 56]) / 255
+mata = np.array([19, 27, 24]) / 255
+via = np.array([62, 54, 88]) / 255
+principal = np.array([193, 142, 246]) / 255
+texto = np.array([241, 236, 248]) / 255
 
-# Via local (branca no OSM) fica branca de verdade; via principal (amarelo e
-# laranja no OSM, R alto e B baixo) vira lavanda.
+cor = np.zeros_like(a) + noite
+# quadras: cinza neutro mais escuro que o fundo
+cinza = (L < 0.915) & (L > 0.6) & ((R - B) < 0.1)
+cor[cinza] = quadra
+verde = ((G - R) > 0.05) & ((G - B) > 0.04)
+cor[verde] = mata
 branca = np.clip((L - 0.962) / 0.038, 0, 1)[..., None]
 quente = (np.clip((R - 0.93) / 0.07, 0, 1) * np.clip((0.86 - B) / 0.15, 0, 1) * (G > 0.72))[..., None]
-ouro = np.array([193, 142, 246]) / 255
-branco = np.array([255, 253, 248]) / 255
-cor = base * (1 - branca) + branco * branca
-cor = cor * (1 - quente) + ouro * quente
-# Verde de praça e mata vira um sálvia apagado, para o olho achar a quadra.
-verde = ((G - R) > 0.06) & ((G - B) > 0.06)
-salvia = np.array([214, 222, 206]) / 255
-cor[verde] = cor[verde] * 0.4 + salvia * 0.6
-
+cor = cor * (1 - branca) + via * branca
+cor = cor * (1 - quente) + principal * quente
+# texto e ícones: quanto mais escuro no original, mais claro aqui
+tinta = np.clip((0.5 - L) / 0.3, 0, 1)[..., None]
+cor = cor * (1 - tinta) + texto * tinta
 Image.fromarray((np.clip(cor, 0, 1) * 255).astype("uint8")).save("src/assets/mapa/valparaiso-petropolis.jpg", quality=82, optimize=True)
 print("mapa salvo", W, H)

@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowUpRight, Baby, Cake, Check, Gift, PartyPopper, type LucideIcon } from "lucide-react";
+import { ArrowUpRight, Baby, Cake, Check, Crown, Gift, PartyPopper, type LucideIcon } from "lucide-react";
 import { useId, useState, type ReactNode } from "react";
 import { useForm } from "react-hook-form";
 
@@ -14,6 +14,7 @@ import { IconeWhatsApp } from "../ui/IconeWhatsApp";
 const ICONES: Record<string, LucideIcon> = {
   infantil: PartyPopper,
   aninho: Baby,
+  quinze: Crown,
   aniversario: Cake,
   outro: Gift,
 };
@@ -80,7 +81,7 @@ export function FormularioContato() {
     <form onSubmit={handleSubmit(enviar)} noValidate className="grid grid-cols-1 gap-6 sm:grid-cols-2 [&>*]:min-w-0">
       <fieldset className="sm:col-span-2" aria-invalid={errors.tipoEvento ? true : undefined} aria-describedby={errors.tipoEvento ? `${id("tipoEvento")}-erro` : undefined}>
         <legend className="text-[0.9rem] font-semibold text-ink">Que festa você está planejando?</legend>
-        <div className="mt-3 grid grid-cols-2 gap-2">
+        <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
           {site.servicos.map((s) => {
             const Icone = ICONES[s.slug];
             return (

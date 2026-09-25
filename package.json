@@ -12,7 +12,8 @@
     "logo": "node scripts/logo.mjs",
     "mapa": "python scripts/mapa.py",
     "analyze": "node scripts/analyze.mjs",
-    "build:pages": "node scripts/pages.mjs"
+    "build:pages": "node scripts/pages.mjs",
+    "videos": "node scripts/videos.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",

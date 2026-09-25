@@ -50,3 +50,6 @@ next-env.d.ts
 # material de verificação local
 /material/*.png
 /material/*.json
+
+# originais dos reels (37 MB): o site usa public/videos
+/videos/

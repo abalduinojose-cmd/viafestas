@@ -12,8 +12,10 @@ import {
   Baby,
   Cake,
   CakeSlice,
+  Beef,
   Car,
   Clock,
+  Crown,
   Flower2,
   Gift,
   HeartHandshake,
@@ -60,11 +62,13 @@ export const site = {
      total de avaliações e os comentários. */
   google: { total: 388 },
   cnpj: null as string | null, // TODO: CNPJ, se o cliente quiser no rodapé
-  /* TODO: confirmar com o cliente que tipos de evento a casa faz. As fotos
-     e as avaliações mostram festa infantil e aniversário. */
+  /* Tipos com prova: fotos e avaliações (infantil, aninho, aniversário) e
+     o reel da debutante (15 anos). TODO: confirmar se fazem casamento e
+     corporativo. */
   servicos: [
     { slug: "infantil", titulo: "Festa infantil" },
     { slug: "aninho", titulo: "Primeiro aninho" },
+    { slug: "quinze", titulo: "15 anos" },
     { slug: "aniversario", titulo: "Aniversário" },
     { slug: "outro", titulo: "Outro evento" },
   ],
@@ -86,6 +90,7 @@ export const NAV = [
   { href: "#o-espaco", rotulo: "O espaço" },
   { href: "#servicos", rotulo: "Serviços" },
   { href: "#galeria", rotulo: "Galeria" },
+  { href: "#instagram", rotulo: "Instagram" },
   { href: "#avaliacoes", rotulo: "Avaliações" },
   { href: "#localizacao", rotulo: "Localização" },
   { href: "#contato", rotulo: "Orçamento" },
@@ -103,7 +108,7 @@ export const HERO = {
   localApoio: "Buffet e decoração",
   atalhoTitulo: "Que festa você está planejando?",
   atalhoApoio: "Toque e a conversa abre no WhatsApp da Via Festas.",
-  atalhos: ["Festa infantil", "Primeiro aninho", "Aniversário", "Outro evento"],
+  atalhos: ["Festa infantil", "Primeiro aninho", "15 anos", "Aniversário", "Outro evento"],
 } as const;
 
 export const PROVA = {
@@ -232,6 +237,7 @@ export const EVENTOS = {
       itens: [
         { rotulo: "Festa infantil", icone: PartyPopper },
         { rotulo: "Primeiro aninho", icone: Baby },
+        { rotulo: "15 anos", icone: Crown },
         { rotulo: "Aniversário", icone: Cake },
         { rotulo: "Outros eventos", icone: Gift },
       ],
@@ -242,6 +248,7 @@ export const EVENTOS = {
       itens: [
         { rotulo: "Buffet completo", icone: UtensilsCrossed },
         { rotulo: "Lanches que as crianças amam", icone: PartyPopper },
+        { rotulo: "Mini hambúrgueres na chapa", icone: Beef },
         { rotulo: "Doces e bolo da festa", icone: CakeSlice },
       ],
     },
@@ -288,6 +295,24 @@ export const GALERIA = {
     "salaoMesasPostas",
   ] satisfies ChaveFoto[],
   dica: "Arraste para o lado para ver mais.",
+} as const;
+
+export type Reel = { id: string; titulo: string; legenda: string; autor: string; video: `/${string}` };
+
+/** Reels do Instagram: vídeos reencodados por `npm run videos`. */
+export const INSTAGRAM = {
+  id: "instagram",
+  rotulo: "No Instagram",
+  titulo: "A festa acontecendo.",
+  texto: "Quatro vídeos de quem viveu a Via Festas por dentro. Toque para assistir com som.",
+  cta: "Seguir no Instagram",
+  seguidores: "+ de 12 mil seguidores",
+  reels: [
+    { id: "tour-referencia", titulo: "Referência na cidade", legenda: "Tour pela casa decorada, com luzes acesas", autor: "@gabriellecamillo", video: "/videos/tour-referencia.mp4" },
+    { id: "quinze-anos-lilas", titulo: "15 anos em lilás", legenda: "A entrada da debutante e o salão montado", autor: "@viafestas", video: "/videos/quinze-anos-lilas.mp4" },
+    { id: "hamburguer-na-festa", titulo: "Hambúrguer na festa", legenda: "O tema do aniversariante virou cardápio na chapa", autor: "@viafestas", video: "/videos/hamburguer-na-festa.mp4" },
+    { id: "espaco-por-dentro", titulo: "O espaço por dentro", legenda: "Salão, mesas e cada canto antes da festa", autor: "@viafestas", video: "/videos/espaco-por-dentro.mp4" },
+  ] satisfies Reel[],
 } as const;
 
 export const AVALIACOES = {

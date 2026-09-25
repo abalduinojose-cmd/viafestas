@@ -9,6 +9,7 @@ import { Frase } from "@/components/sections/Frase";
 import { Galeria } from "@/components/sections/Galeria";
 import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/Hero";
+import { Instagram } from "@/components/sections/Instagram";
 import { Localizacao } from "@/components/sections/Localizacao";
 import { OSalao } from "@/components/sections/OSalao";
 import { Perguntas } from "@/components/sections/Perguntas";
@@ -42,6 +43,11 @@ export default function Home() {
 
         <Silhueta de="noite" para="creme" />
         <Galeria />
+
+        <Silhueta de="creme" para="noite" />
+        <Instagram />
+
+        <Silhueta de="noite" para="creme" />
         <Avaliacoes />
         <Localizacao />
         <Contato />
