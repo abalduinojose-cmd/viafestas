@@ -1,14 +1,17 @@
 import { ArrowUpRight } from "lucide-react";
+import Image from "next/image";
 
 import espacoPorDentro from "@/assets/reels/espaco-por-dentro.jpg";
 import hamburguerNaFesta from "@/assets/reels/hamburguer-na-festa.jpg";
 import quinzeAnosLilas from "@/assets/reels/quinze-anos-lilas.jpg";
 import tourReferencia from "@/assets/reels/tour-referencia.jpg";
-import { INSTAGRAM, site } from "@/content/site";
+import { INSTAGRAM, WHATSAPP, site } from "@/content/site";
 import { asset } from "@/lib/asset";
 
+import selo from "../../../public/marca/selo.webp";
 import { IconeInstagram } from "../ui/IconesRedes";
-import { Reel } from "../ui/Reel";
+import { IconeWhatsApp } from "../ui/IconeWhatsApp";
+import { VitrineReels } from "../ui/VitrineReels";
 
 const CAPAS = {
   "tour-referencia": tourReferencia,
@@ -18,62 +21,69 @@ const CAPAS = {
 };
 
 /**
- * Instagram em vitrine de reels: cabeçalho com o perfil em pílula de vidro
- * e o botão de seguir, e os quatro vídeos 9:16 lado a lado no desktop, em
- * escada (o 2º e o 4º descem), para ler como mural e não como grade. No
- * celular viram trilho com encaixe, um e meio à vista, que convida a
- * arrastar sem precisar de seta.
+ * Instagram como o próprio app: à esquerda o cartão do perfil (logo num
+ * anel de gradiente que gira devagar, a bio real, seguidores, Seguir e
+ * Mensagem); à direita o visor de reels no estilo stories, com a fila ao
+ * lado. Fundo noite com dois halos de lavanda.
  */
 export function Instagram() {
+  const reels = INSTAGRAM.reels.map((r) => ({ ...r, src: asset(r.video), capa: CAPAS[r.id as keyof typeof CAPAS] }));
   return (
     <section id={INSTAGRAM.id} aria-labelledby="titulo-instagram" className="on-dark relative isolate overflow-hidden bg-noite py-20 text-perola md:py-28">
-      <div aria-hidden className="absolute -left-40 top-10 -z-10 size-[28rem] rounded-full bg-lilas/15 blur-[120px]" />
-      <div aria-hidden className="absolute -right-40 bottom-0 -z-10 size-[26rem] rounded-full bg-roxo/25 blur-[120px]" />
+      <div aria-hidden className="absolute -left-40 top-10 -z-10 size-[30rem] rounded-full bg-lilas/15 blur-[130px]" />
+      <div aria-hidden className="absolute -right-32 bottom-0 -z-10 size-[28rem] rounded-full bg-roxo/30 blur-[130px]" />
 
-      <div className="container-page">
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-2xl">
-            <p className="rotulo-caps flex items-center gap-3 text-lilas">
-              <span aria-hidden className="h-px w-9 bg-lilas/60" />
-              {INSTAGRAM.rotulo}
-            </p>
-            <h2 id="titulo-instagram" className="mt-4 text-[clamp(2.3rem,5.2vw,4rem)] text-branco">
-              {INSTAGRAM.titulo}
-            </h2>
-            <p className="mt-5 max-w-[52ch] text-perola/75">{INSTAGRAM.texto}</p>
+      <div className="container-page grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+        <div>
+          <p className="rotulo-caps flex items-center gap-3 text-lilas">
+            <span aria-hidden className="h-px w-9 bg-lilas/60" />
+            {INSTAGRAM.rotulo}
+          </p>
+          <h2 id="titulo-instagram" className="mt-4 text-[clamp(2.3rem,5.2vw,4rem)] text-branco">
+            {INSTAGRAM.titulo}
+          </h2>
+          <p className="mt-5 max-w-[46ch] text-perola/75">{INSTAGRAM.texto}</p>
+
+          {/* Cartão de perfil */}
+          <div className="mt-10 max-w-md rounded-[1.75rem] border border-perola/12 bg-perola/[0.05] p-6 backdrop-blur-md">
+            <div className="flex items-center gap-5">
+              <span className="relative grid size-20 shrink-0 place-items-center">
+                <span aria-hidden className="absolute inset-0 rounded-full bg-[conic-gradient(from_0deg,#d2b2ff,#c18ef6,#7040a8,#f1ecf8,#d2b2ff)] motion-safe:animate-[spin_8s_linear_infinite]" />
+                <span className="relative grid size-[4.4rem] place-items-center rounded-full bg-branco">
+                  <Image src={selo} alt="" sizes="64px" loading="eager" className="size-[3.6rem]" />
+                </span>
+              </span>
+              <div className="min-w-0">
+                <p className="font-semibold text-branco">{site.social.instagramArroba}</p>
+                <p className="text-[0.9rem] text-perola/70">{site.nome}</p>
+                <p className="mt-2 text-[0.9rem] text-perola">
+                  <span className="font-display text-[1.35rem] text-branco">{INSTAGRAM.seguidores}</span> {INSTAGRAM.seguidoresRotulo}
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-5 space-y-0.5 text-[0.95rem] text-perola/85">
+              {INSTAGRAM.bio.map((linha) => (
+                <p key={linha}>{linha}</p>
+              ))}
+            </div>
+
+            <div className="mt-6 grid grid-cols-2 gap-2.5">
+              <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" className="btn btn-lilas h-11 text-[0.88rem]">
+                <IconeInstagram className="size-4" strokeWidth={1.9} />
+                {INSTAGRAM.cta}
+                <ArrowUpRight aria-hidden className="size-3.5" strokeWidth={2} />
+              </a>
+              <a href={WHATSAPP.padrao} target="_blank" rel="noopener noreferrer" className="btn btn-vidro h-11 text-[0.88rem]">
+                <IconeWhatsApp className="size-4" />
+                {INSTAGRAM.mensagem}
+              </a>
+            </div>
           </div>
-
-          <a
-            href={site.social.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center gap-4 self-start rounded-full border border-perola/15 bg-perola/[0.06] py-2 pl-2 pr-5 backdrop-blur-md transition hover:border-lilas/60 hover:bg-perola/10 lg:self-end"
-          >
-            <span className="grid size-12 place-items-center rounded-full bg-gradient-to-br from-lilas-claro via-lilas to-roxo text-noite">
-              <IconeInstagram className="size-5" strokeWidth={1.8} />
-            </span>
-            <span className="leading-tight">
-              <span className="block font-semibold text-branco">{site.social.instagramArroba}</span>
-              <span className="hidden text-[0.82rem] text-perola/65 sm:block">{INSTAGRAM.seguidores}</span>
-            </span>
-            <span className="ml-auto inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-lilas px-4 py-2 text-[0.85rem] font-semibold text-noite transition group-hover:bg-lilas-claro">
-              {INSTAGRAM.cta}
-              <ArrowUpRight aria-hidden className="size-4 transition group-hover:rotate-45" strokeWidth={2} />
-            </span>
-          </a>
         </div>
-      </div>
 
-      <ul
-        aria-label="Vídeos do Instagram da Via Festas"
-        className="scrollbar-none gallery-inset mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 md:mt-16 lg:grid lg:pb-12 lg:grid-cols-4 lg:gap-6 lg:overflow-visible"
-      >
-        {INSTAGRAM.reels.map((r, i) => (
-          <li key={r.id} className={`w-[68vw] max-w-[20rem] shrink-0 snap-start sm:w-[40vw] lg:w-auto lg:max-w-none ${i % 2 === 1 ? "lg:translate-y-12" : ""}`}>
-            <Reel src={asset(r.video)} capa={CAPAS[r.id as keyof typeof CAPAS]} titulo={r.titulo} legenda={r.legenda} autor={r.autor} indice={i} />
-          </li>
-        ))}
-      </ul>
+        <VitrineReels reels={reels} />
+      </div>
     </section>
   );
 }

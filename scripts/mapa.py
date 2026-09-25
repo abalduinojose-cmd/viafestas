@@ -10,10 +10,10 @@ Requer o crédito visível "© OpenStreetMap" onde o mapa aparecer.
 """
 import io, math, time, urllib.request
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageFilter
 
 LAT, LNG, Z = -22.5170231, -43.1912147, 17
-W, H, T = 1600, 1100, 256
+W, H, T = 2200, 1200, 256
 
 n = 2 ** Z
 xf = (LNG + 180) / 360 * n
@@ -68,5 +68,14 @@ cor = cor * (1 - quente) + principal * quente
 # texto e ícones: quanto mais escuro no original, mais claro aqui
 tinta = np.clip((0.5 - L) / 0.3, 0, 1)[..., None]
 cor = cor * (1 - tinta) + texto * tinta
+# Brilho de neon nas vias principais: a máscara das vias quentes, borrada,
+# soma lavanda por cima (modo "screen"), como avenida acesa vista do alto.
+brilho = Image.fromarray((quente[..., 0] * 255).astype("uint8")).filter(ImageFilter.GaussianBlur(9))
+g = (np.asarray(brilho).astype(float) / 255)[..., None] * 0.85
+cor = 1 - (1 - cor) * (1 - principal * g)
+# Vinheta suave: o olho vai para o centro, onde fica o pino.
+yy, xx = np.mgrid[0:H, 0:W]
+d = np.sqrt(((xx - W / 2) / (W / 2)) ** 2 + ((yy - H / 2) / (H / 2)) ** 2)
+cor = cor * (1 - np.clip((d - 0.55) / 0.9, 0, 1) * 0.55)[..., None]
 Image.fromarray((np.clip(cor, 0, 1) * 255).astype("uint8")).save("src/assets/mapa/valparaiso-petropolis.jpg", quality=82, optimize=True)
 print("mapa salvo", W, H)

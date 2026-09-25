@@ -7,9 +7,10 @@ import { MapaInterativo } from "../ui/MapaInterativo";
 import { Titulo } from "../ui/Titulo";
 
 /**
- * Mapa grande de rua (tiles do OpenStreetMap em zoom 17 recoloridos como
- * papel, scripts/mapa.py) que vira Google Maps interativo no toque. Ao
- * lado, o cartão com endereço, horários e os dois atalhos de navegação.
+ * Localização em faixa larga: o mapa noturno ocupa o cartão inteiro e o
+ * endereço flutua por cima, num painel de vidro à esquerda (no celular o
+ * painel desce para baixo do mapa). Tiles do OpenStreetMap recoloridos por
+ * scripts/mapa.py; o Google Maps só carrega se a pessoa pedir.
  */
 export function Localizacao() {
   const { endereco } = site;
@@ -20,36 +21,41 @@ export function Localizacao() {
       <div className="container-page">
         <Titulo id="titulo-localizacao" tom="branco" rotulo={LOCALIZACAO.rotulo} titulo={LOCALIZACAO.titulo} texto={LOCALIZACAO.texto} className="max-w-3xl" />
 
-        <div className="revela mt-12 grid grid-cols-1 overflow-hidden rounded-[2rem] border border-ink/10 bg-creme shadow-[0_40px_80px_-50px_rgb(18_15_26/0.45)] lg:grid-cols-[1.35fr_0.65fr]">
-          <figure className="relative min-w-0 aspect-[4/5] sm:aspect-[16/10] lg:aspect-auto lg:min-h-[32rem]">
-            <MapaInterativo imagem={mapa} consulta={consulta} titulo={`Mapa: ${consulta}`} nome={site.nome} />
-            <figcaption className="absolute right-3 top-3 rounded-full bg-branco/85 px-2.5 py-1 text-[0.68rem] text-ink">© OpenStreetMap</figcaption>
+        <div className="revela on-dark relative mt-12 overflow-hidden rounded-[2rem] bg-noite shadow-[0_50px_100px_-50px_rgb(18_15_26/0.7)] ring-1 ring-ink/10">
+          <figure className="relative h-[26rem] sm:h-[30rem] lg:h-[38rem]">
+            <MapaInterativo imagem={mapa} consulta={consulta} titulo={`Mapa: ${consulta}`} nome={site.nome} endereco={`${endereco.rua}, ${endereco.bairro}`} />
+            <figcaption className="absolute bottom-3 right-4 text-[0.68rem] text-perola/60">© OpenStreetMap</figcaption>
           </figure>
 
-          <div className="flex min-w-0 flex-col p-7 sm:p-9">
-            <h3 className="text-[1.9rem] text-ink">{LOCALIZACAO.cartaoTitulo}</h3>
-            <ul className="mt-6 space-y-5">
-              {LOCALIZACAO.itens.map(({ rotulo, icone: Icone }) => (
-                <li key={rotulo} className="flex items-start gap-4">
-                  <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-full bg-noite text-lilas-claro">
-                    <Icone aria-hidden strokeWidth={1.6} className="size-[1.05rem]" />
+          <div className="relative p-6 sm:p-8 lg:absolute lg:bottom-6 lg:left-6 lg:top-6 lg:flex lg:w-[24rem] lg:flex-col lg:rounded-[1.5rem] lg:border lg:border-perola/15 lg:bg-noite/70 lg:p-8 lg:shadow-[0_30px_60px_-20px_rgb(0_0_0/0.8)] lg:backdrop-blur-xl">
+            <p className="rotulo-caps text-lilas">{LOCALIZACAO.cartaoTitulo}</p>
+            <p className="mt-3 font-display text-[1.9rem] leading-tight text-branco">{endereco.rua}</p>
+            <p className="mt-1 text-perola/70">
+              {endereco.bairro}, {endereco.cidade}, {endereco.uf} · {endereco.cep}
+            </p>
+
+            <ul className="mt-6 space-y-3.5 border-t border-perola/10 pt-6">
+              {LOCALIZACAO.itens.slice(1).map(({ rotulo, icone: Icone }) => (
+                <li key={rotulo} className="flex items-start gap-3">
+                  <span className="grid size-8 shrink-0 place-items-center rounded-full bg-perola/[0.08] text-lilas">
+                    <Icone aria-hidden strokeWidth={1.7} className="size-4" />
                   </span>
-                  <span className="pt-1.5 text-[0.98rem] leading-relaxed text-ink/80">{rotulo}</span>
+                  <span className="pt-1 text-[0.92rem] leading-snug text-perola/85">{rotulo}</span>
                 </li>
               ))}
             </ul>
 
-            <div className="mt-auto grid gap-2.5 pt-8 sm:grid-cols-2 lg:grid-cols-1">
+            <div className="mt-8 grid gap-2.5 sm:grid-cols-2 lg:mt-auto lg:grid-cols-1">
               <a href={rota} target="_blank" rel="noopener noreferrer" className="btn btn-lilas h-12 px-5 text-[0.9rem]">
                 <Navigation aria-hidden className="size-4" strokeWidth={2} />
                 {LOCALIZACAO.rota}
               </a>
-              <a href={site.social.googleMaps} target="_blank" rel="noopener noreferrer" className="btn btn-contorno-escuro h-12 px-5 text-[0.9rem]">
+              <a href={site.social.googleMaps} target="_blank" rel="noopener noreferrer" className="btn btn-vidro h-12 px-5 text-[0.9rem]">
                 {LOCALIZACAO.mapaAcao}
                 <ArrowUpRight aria-hidden className="size-4" strokeWidth={2} />
               </a>
             </div>
-            <p className="mt-5 text-[0.88rem] text-roxo">{LOCALIZACAO.aviso}</p>
+            <p className="mt-4 text-[0.82rem] text-perola/60">{LOCALIZACAO.aviso}</p>
           </div>
         </div>
       </div>

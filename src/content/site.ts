@@ -304,14 +304,19 @@ export const INSTAGRAM = {
   id: "instagram",
   rotulo: "No Instagram",
   titulo: "A festa acontecendo.",
-  texto: "Quatro vídeos de quem viveu a Via Festas por dentro. Toque para assistir com som.",
-  cta: "Seguir no Instagram",
-  seguidores: "+ de 12 mil seguidores",
+  texto: "Vídeos de quem viveu a Via Festas por dentro. Eles começam sem som: toque para ouvir.",
+  cta: "Seguir",
+  mensagem: "Mensagem",
+  seguidores: "12 mil+",
+  seguidoresRotulo: "seguidores",
+  /* Bio real do perfil @viafestas. */
+  bio: ["18 anos realizando sonhos ✨", "Espaço com buffet completo e decoração."],
+  /* O mais leve primeiro: é ele que baixa quando o visor aparece. */
   reels: [
-    { id: "tour-referencia", titulo: "Referência na cidade", legenda: "Tour pela casa decorada, com luzes acesas", autor: "@gabriellecamillo", video: "/videos/tour-referencia.mp4" },
     { id: "quinze-anos-lilas", titulo: "15 anos em lilás", legenda: "A entrada da debutante e o salão montado", autor: "@viafestas", video: "/videos/quinze-anos-lilas.mp4" },
     { id: "hamburguer-na-festa", titulo: "Hambúrguer na festa", legenda: "O tema do aniversariante virou cardápio na chapa", autor: "@viafestas", video: "/videos/hamburguer-na-festa.mp4" },
     { id: "espaco-por-dentro", titulo: "O espaço por dentro", legenda: "Salão, mesas e cada canto antes da festa", autor: "@viafestas", video: "/videos/espaco-por-dentro.mp4" },
+    { id: "tour-referencia", titulo: "Referência na cidade", legenda: "Tour pela casa decorada, com as luzes acesas", autor: "@gabriellecamillo", video: "/videos/tour-referencia.mp4" },
   ] satisfies Reel[],
 } as const;
 
