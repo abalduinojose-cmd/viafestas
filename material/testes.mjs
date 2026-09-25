@@ -70,10 +70,9 @@ const sl = await p.$eval("#avaliacoes ul[aria-label]", (e) => e.scrollLeft);
 ok(sl > 100, `carrossel anda (scrollLeft ${Math.round(sl)})`);
 // 3b. Mapa interativo
 await p.$eval("#localizacao", (el) => el.scrollIntoView());
-await p.$$eval("#localizacao button", (bs) => bs.find((b) => b.textContent.includes("Explorar"))?.click());
 await espera(600);
 const iframe = await p.$eval("#localizacao iframe", (f) => f.src).catch(() => null);
-ok(iframe?.includes("google.com/maps") && iframe.includes("output=embed"), "Explorar o mapa carrega o Google Maps");
+ok(iframe?.includes("google.com/maps") && iframe.includes("output=embed"), "mapa do Google embutido na seção");
 // 3c. Nota 4,9 fora do site
 const temNota = await p.evaluate(() => /4,6|4\.6|Celebrare|Juliana/.test(document.body.innerText));
 ok(!temNota, "nenhuma nota nem resto da Celebrare no texto");

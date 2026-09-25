@@ -1,16 +1,15 @@
 import { ArrowUpRight, Navigation } from "lucide-react";
 
-import mapa from "@/assets/mapa/valparaiso-petropolis.jpg";
 import { LOCALIZACAO, site } from "@/content/site";
 
-import { MapaInterativo } from "../ui/MapaInterativo";
 import { Titulo } from "../ui/Titulo";
 
 /**
- * Localização em faixa larga: o mapa noturno ocupa o cartão inteiro e o
- * endereço flutua por cima, num painel de vidro à esquerda (no celular o
- * painel desce para baixo do mapa). Tiles do OpenStreetMap recoloridos por
- * scripts/mapa.py; o Google Maps só carrega se a pessoa pedir.
+ * Localização com o Google Maps de verdade (pedido do cliente: "igual o do
+ * Google", nas cores normais dele). O iframe só carrega perto da tela
+ * (`loading="lazy"`), então não pesa na abertura do site. No desktop o
+ * endereço flutua num painel branco à esquerda, como o painel lateral do
+ * próprio Google Maps; no celular o painel vem logo abaixo do mapa.
  */
 export function Localizacao() {
   const { endereco } = site;
@@ -21,26 +20,32 @@ export function Localizacao() {
       <div className="container-page">
         <Titulo id="titulo-localizacao" tom="branco" rotulo={LOCALIZACAO.rotulo} titulo={LOCALIZACAO.titulo} texto={LOCALIZACAO.texto} className="max-w-3xl" />
 
-        <div className="revela on-dark relative mt-12 overflow-hidden rounded-[2rem] bg-noite shadow-[0_50px_100px_-50px_rgb(18_15_26/0.7)] ring-1 ring-ink/10">
-          <figure className="relative h-[26rem] sm:h-[30rem] lg:h-[38rem]">
-            <MapaInterativo imagem={mapa} consulta={consulta} titulo={`Mapa: ${consulta}`} nome={site.nome} endereco={`${endereco.rua}, ${endereco.bairro}`} />
-            <figcaption className="absolute bottom-3 right-4 text-[0.68rem] text-perola/60">© OpenStreetMap</figcaption>
-          </figure>
+        <div className="revela relative mt-12 overflow-hidden rounded-[2rem] bg-creme shadow-[0_50px_100px_-50px_rgb(18_15_26/0.55)] ring-1 ring-ink/10">
+          <div className="relative h-[24rem] sm:h-[28rem] lg:h-[36rem]">
+            <iframe
+              title={`Mapa do Google: ${consulta}`}
+              src={`https://www.google.com/maps?q=${encodeURIComponent(consulta)}&z=17&output=embed`}
+              className="absolute inset-0 size-full border-0"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
+          </div>
 
-          <div className="relative p-6 sm:p-8 lg:absolute lg:bottom-6 lg:left-6 lg:top-6 lg:flex lg:w-[24rem] lg:flex-col lg:rounded-[1.5rem] lg:border lg:border-perola/15 lg:bg-noite/70 lg:p-8 lg:shadow-[0_30px_60px_-20px_rgb(0_0_0/0.8)] lg:backdrop-blur-xl">
-            <p className="rotulo-caps text-lilas">{LOCALIZACAO.cartaoTitulo}</p>
-            <p className="mt-3 font-display text-[1.9rem] leading-tight text-branco">{endereco.rua}</p>
-            <p className="mt-1 text-perola/70">
+          <div className="relative bg-branco p-6 sm:p-8 lg:absolute lg:bottom-6 lg:left-6 lg:top-6 lg:flex lg:w-[23rem] lg:flex-col lg:rounded-[1.5rem] lg:p-7 lg:shadow-[0_24px_60px_-20px_rgb(18_15_26/0.45)] lg:ring-1 lg:ring-ink/10">
+            <p className="rotulo-caps text-roxo">{LOCALIZACAO.cartaoTitulo}</p>
+            <p className="mt-3 font-display text-[1.8rem] leading-tight text-ink">{endereco.rua}</p>
+            <p className="mt-1 text-ink-muted">
               {endereco.bairro}, {endereco.cidade}, {endereco.uf} · {endereco.cep}
             </p>
 
-            <ul className="mt-6 space-y-3.5 border-t border-perola/10 pt-6">
+            <ul className="mt-6 space-y-3.5 border-t border-ink/10 pt-6">
               {LOCALIZACAO.itens.slice(1).map(({ rotulo, icone: Icone }) => (
                 <li key={rotulo} className="flex items-start gap-3">
-                  <span className="grid size-8 shrink-0 place-items-center rounded-full bg-perola/[0.08] text-lilas">
-                    <Icone aria-hidden strokeWidth={1.7} className="size-4" />
+                  <span className="grid size-8 shrink-0 place-items-center rounded-full bg-creme text-roxo">
+                    <Icone aria-hidden strokeWidth={1.8} className="size-4" />
                   </span>
-                  <span className="pt-1 text-[0.92rem] leading-snug text-perola/85">{rotulo}</span>
+                  <span className="pt-1 text-[0.92rem] leading-snug text-ink/80">{rotulo}</span>
                 </li>
               ))}
             </ul>
@@ -50,12 +55,12 @@ export function Localizacao() {
                 <Navigation aria-hidden className="size-4" strokeWidth={2} />
                 {LOCALIZACAO.rota}
               </a>
-              <a href={site.social.googleMaps} target="_blank" rel="noopener noreferrer" className="btn btn-vidro h-12 px-5 text-[0.9rem]">
+              <a href={site.social.googleMaps} target="_blank" rel="noopener noreferrer" className="btn btn-contorno-escuro h-12 px-5 text-[0.9rem]">
                 {LOCALIZACAO.mapaAcao}
                 <ArrowUpRight aria-hidden className="size-4" strokeWidth={2} />
               </a>
             </div>
-            <p className="mt-4 text-[0.82rem] text-perola/60">{LOCALIZACAO.aviso}</p>
+            <p className="mt-4 text-[0.82rem] text-roxo">{LOCALIZACAO.aviso}</p>
           </div>
         </div>
       </div>

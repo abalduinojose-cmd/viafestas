@@ -97,25 +97,6 @@ for (const [de, { para, recorte }] of Object.entries(CURADORIA)) {
   feitas++;
 }
 
-/* Versão própria do hero: a foto do castelo em 2560px, com máscara de
-   nitidez mais forte e qualidade alta. Na versão comum (2000px, q84, servida
-   em q60 pelo next/image) o detalhe fino das torres e das luzes virava
-   borrão sob o véu escuro. */
-{
-  const origem = path.join(RAIZ, "fotos", "viafestas_1790164923_3992515076375726715_2095407660.jpg");
-  const destino = path.join(DESTINO, "hero-castelo.jpg");
-  const [mo, md] = [await mtime(origem), await mtime(destino)];
-  if (mo !== null && (md === null || Math.max(mo, mScript ?? 0) > md)) {
-    const { size } = await sharp(origem)
-      .rotate()
-      .resize({ width: 2560, withoutEnlargement: true })
-      .sharpen({ sigma: 1.1, m1: 0.6, m2: 2 })
-      .jpeg({ quality: 88, mozjpeg: true })
-      .toFile(destino);
-    console.log(`hero-castelo.jpg          ${(size / 1024).toFixed(0)}KB`);
-  }
-}
-
 /* Avatares das avaliações do Google: vêm como PNG de 256px. */
 const AVATARES = path.join(RAIZ, "midia", "avatares");
 const DESTINO_AV = path.join(RAIZ, "src", "assets", "avatares");
